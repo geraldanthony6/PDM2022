@@ -7,7 +7,7 @@ function setup() {
   red = new colorBoxes(0, "red");
   orange = new colorBoxes(25, color(239, 134, 51));
   yellow = new colorBoxes(50, color(255, 249, 73));
-  green = new colorBoxes(75, "green");
+  green = new colorBoxes(75, color(120, 242, 58));
   cyan = new colorBoxes(100, color(117, 249, 251));
   blue = new colorBoxes(125, "blue");
   magenta = new colorBoxes(150, color(232, 94, 250));
@@ -64,7 +64,7 @@ class colorBoxes{
         } else if(mouseY > 50 && mouseY < 75){
           currentColor = color(255, 249, 73);
         } else if(mouseY > 75 && mouseY < 100){
-          currentColor = "green";
+          currentColor = color(120, 242, 58);
         } else if(mouseY > 100 && mouseY < 125){
           currentColor = color(117, 249, 251);
         } else if(mouseY > 125 && mouseY < 150){
