@@ -86,7 +86,7 @@ class colorBoxes{
 function drawArt(){
   push();
   stroke(currentColor);
-  strokeWeight(2);
+  strokeWeight(5);
   line(pmouseX, pmouseY, mouseX, mouseY);
   pop();
 }
