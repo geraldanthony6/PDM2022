@@ -1,4 +1,3 @@
-let animation;
 let spriteMap = [
   {x: 0, y: 0 },
   {x: 80, y: 0},
@@ -32,26 +31,46 @@ function setup() {
 }
 
 function draw() {
+ push();
+
+
+
+ pop();
+
  background(255, 0, 100);
 
   push();
 
   fill(0, 0, 0);
   noStroke();
-  rect(0, 120, window.innerWidth, window.innerHeight);
+  rect(0, 300, window.innerWidth, window.innerHeight);
 
   pop();
 
   push();
-  animateCharacterSprite(50, 50, spelunky);
+  createBuilding(100, 30, 200, 280);
+  createBuilding(500, 30, 200, 280);
+  createBuilding(600, 650, 200, 280);
+  createBuilding(250, 650, 200, 280);
   pop();
 
   push();
-  animateCharacterSprite(100, 200, warrior);
-  pop();
+  fill(64, 66, 71);
+  rect(0, 300, window.innerWidth, 50);
+  rect(0, 920, window.innerWidth, 50);
 
+  //Characters
   push();
-  animateCharacterSprite(60, 400, spelunkyGirl);
+  animateCharacterSprite(0, 300, spelunky);
+  pop();
+  push();
+  animateCharacterSprite(300, 500, warrior);
+  pop();
+  push();
+  animateCharacterSprite(110, 850, spelunkyGirl);
+  pop();
+  push();
+  animateCharacterSprite(600, 400, spelunky);
   pop();
 }
 
@@ -73,7 +92,7 @@ function animateCharacterSprite(locationX, locationY, spriteCharacter){
 
     currScale = 1.0;
     newLocation += 1
-    time += .3;
+    time += .1;
     if(time > 1) {
       index++;
       if(index > spriteMap.length - 1){
@@ -95,4 +114,17 @@ function animateCharacterSprite(locationX, locationY, spriteCharacter){
   } else {
     index = 0;
   }
+}
+
+function createBuilding(locationX, locationY){
+  fill(164, 167, 171);
+  rect(locationX, locationY, 200, 280);
+ 
+  fill(221, 202, 149);
+  stroke('black');
+  rect(locationX + 50, locationY + 40, 100, 100);
+
+  fill(180, 120, 71);
+  stroke('black');
+  rect(locationX + 60, locationY + 205, 75, 75);
 }
