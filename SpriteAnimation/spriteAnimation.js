@@ -17,13 +17,15 @@ let spriteLength = 80;
 let index = 0;
 let time = 0;
 let newLocation = 0;
-let test;
 
 
 function preload(){
   spelunky = loadImage('SpelunkyGuy.png');
   spelunkyGirl = loadImage('s.png');
   warrior = loadImage('JungleWarrior.png');
+  red = loadImage('Red.png');
+  robot = loadImage('Robot.png');
+  cyan = loadImage('Cyan.png');
 }
 
 function setup() {
@@ -32,13 +34,7 @@ function setup() {
 }
 
 function draw() {
- push();
-
-
-
- pop();
-
- background(255, 0, 100);
+ background(255, 50, 100);
 
   push();
 
@@ -51,8 +47,12 @@ function draw() {
   push();
   createBuilding(100, 30, 200, 280);
   createBuilding(500, 30, 200, 280);
-  createBuilding(600, 650, 200, 280);
+  createBuilding(1000, 30, 200, 280);
+  createBuilding(1500, 30, 200, 280);
   createBuilding(250, 650, 200, 280);
+  createBuilding(600, 650, 200, 280);
+  createBuilding(1150, 650, 200, 280);
+  createBuilding(1800, 650, 200, 280);
   pop();
 
   push();
@@ -71,8 +71,15 @@ function draw() {
   animateCharacterSprite(110, 850, spelunkyGirl);
   pop();
   push();
-  animateCharacterSprite(600, 400, spelunky);
+  animateCharacterSprite(600, 400, red);
   pop();
+  push();
+  animateCharacterSprite(1000, 550, robot);
+  pop();
+  push();
+  animateCharacterSprite(1500, 855, cyan);
+  pop();
+
 }
 
 function animateCharacterSprite(locationX, locationY, spriteCharacter){
