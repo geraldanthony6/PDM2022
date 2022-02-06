@@ -17,6 +17,7 @@ let spriteLength = 80;
 let index = 0;
 let time = 0;
 let newLocation = 0;
+let test;
 
 
 function preload(){
