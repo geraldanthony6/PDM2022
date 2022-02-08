@@ -23,6 +23,12 @@ let randomStartLoc3;
 let randomStartLoc4;
 let randomStartLoc5;
 let randomStartLoc6;
+let randomStartSprite1;
+let randomStartSprite2;
+let randomStartSprite3;
+let randomStartSprite4;
+let randomStartSprite5;
+let randomStartSprite6;
 
 
 function preload(){
@@ -43,6 +49,12 @@ function setup() {
   randomStartLoc4 = random(0, 1800);
   randomStartLoc5 = random(0, 1800);
   randomStartLoc6 = random(0, 1800);
+  randomStartSprite1 = random([spelunky, spelunkyGirl, warrior, red, robot, cyan])
+  randomStartSprite2 = random([spelunky, spelunkyGirl, warrior, red, robot, cyan])
+  randomStartSprite3 = random([spelunky, spelunkyGirl, warrior, red, robot, cyan])
+  randomStartSprite4 = random([spelunky, spelunkyGirl, warrior, red, robot, cyan])
+  randomStartSprite5 = random([spelunky, spelunkyGirl, warrior, red, robot, cyan])
+  randomStartSprite6 = random([spelunky, spelunkyGirl, warrior, red, robot, cyan])
 }
 
 function draw() {
@@ -74,22 +86,22 @@ function draw() {
 
   //Characters
   push();
-  animateCharacterSprite(randomStartLoc1, 300, spelunky);
+  animateCharacterSprite(randomStartLoc1, 300, randomStartSprite1);
   pop();
   push();
-  animateCharacterSprite(randomStartLoc2, 500, warrior);
+  animateCharacterSprite(randomStartLoc2, 500, randomStartSprite2);
   pop();
   push();
-  animateCharacterSprite(randomStartLoc3, 850, spelunkyGirl);
+  animateCharacterSprite(randomStartLoc3, 850, randomStartSprite3);
   pop();
   push();
-  animateCharacterSprite(randomStartLoc4, 400, red);
+  animateCharacterSprite(randomStartLoc4, 400, randomStartSprite4);
   pop();
   push();
-  animateCharacterSprite(randomStartLoc5, 550, robot);
+  animateCharacterSprite(randomStartLoc5, 550, randomStartSprite5);
   pop();
   push();
-  animateCharacterSprite(randomStartLoc6, 855, cyan);
+  animateCharacterSprite(randomStartLoc6, 855, randomStartSprite6);
   pop();
 
 }
