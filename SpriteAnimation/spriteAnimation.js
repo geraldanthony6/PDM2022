@@ -17,6 +17,12 @@ let spriteLength = 80;
 let index = 0;
 let time = 0;
 let newLocation = 0;
+let randomStartLoc1;
+let randomStartLoc2;
+let randomStartLoc3;
+let randomStartLoc4;
+let randomStartLoc5;
+let randomStartLoc6;
 
 
 function preload(){
@@ -31,6 +37,12 @@ function preload(){
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
   background(200, 200, 200);
+  randomStartLoc1 = random(0, 1800);
+  randomStartLoc2 = random(0, 1800);
+  randomStartLoc3 = random(0, 1800);
+  randomStartLoc4 = random(0, 1800);
+  randomStartLoc5 = random(0, 1800);
+  randomStartLoc6 = random(0, 1800);
 }
 
 function draw() {
@@ -62,22 +74,22 @@ function draw() {
 
   //Characters
   push();
-  animateCharacterSprite(0, 300, spelunky);
+  animateCharacterSprite(randomStartLoc1, 300, spelunky);
   pop();
   push();
-  animateCharacterSprite(300, 500, warrior);
+  animateCharacterSprite(randomStartLoc2, 500, warrior);
   pop();
   push();
-  animateCharacterSprite(110, 850, spelunkyGirl);
+  animateCharacterSprite(randomStartLoc3, 850, spelunkyGirl);
   pop();
   push();
-  animateCharacterSprite(600, 400, red);
+  animateCharacterSprite(randomStartLoc4, 400, red);
   pop();
   push();
-  animateCharacterSprite(1000, 550, robot);
+  animateCharacterSprite(randomStartLoc5, 550, robot);
   pop();
   push();
-  animateCharacterSprite(1500, 855, cyan);
+  animateCharacterSprite(randomStartLoc6, 855, cyan);
   pop();
 
 }
