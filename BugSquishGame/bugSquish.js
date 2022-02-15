@@ -1,9 +1,15 @@
 
 
 let startTime;
+let flying;
+let poked;
+let timerIsDone;
+let eyeGroup;
 let eyeBallImages = []; 
+let walls = [];
+let dir = [0, 90, 180, 270];
 let scoreCount;
-let gameState = 'StartScreen';
+let gameState;
 
 function preload(){
   for(let i = 0; i < 8; i++){
@@ -13,6 +19,14 @@ function preload(){
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
+  scoreCount = 0;
+  startTime  = 30;
+  timerIsDone = false;
+  gameState = "startScreen";
+  eyeGroup = new Group();
+  walls = new Group();
+
+
 }
 
 function draw() {
@@ -47,9 +61,6 @@ function draw() {
     return int((millis() - startTime) / 1000);
   }
 
-  function mousePressed() {
-    scoreCount++;
-  }
 
 
   
