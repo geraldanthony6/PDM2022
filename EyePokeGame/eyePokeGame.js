@@ -142,8 +142,8 @@ class Character {
   }
 
   poke() {
-    if(mouseX > this.x - 40.5 && mouseX < this.x + 40.5 &&
-       mouseY > this.y - 40.5 && mouseY < this.y + 40.5) {
+    if(mouseX > this.x - 45 && mouseX < this.x + 45 &&
+       mouseY > this.y - 45 && mouseY < this.y + 45) {
         this.move = 0
         this.sx = 2;
         this.poked = true;
