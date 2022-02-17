@@ -13,24 +13,28 @@ function setup() {
   sounds.toDestination();
 
   button[0] = createButton('chord1');
-  button[0].position(0, 200);
+  button[0].position(window.innerWidth/2 - 150, window.innerHeight/2);
   button[0].mousePressed( ()=> playSound('chord1'));
 
   button[1] = createButton('chord2');
-  button[1].position(100, 200);
+  button[1].position(window.innerWidth/2 - 50, window.innerHeight/2);
   button[1].mousePressed( ()=> playSound('chord2'));
 
   button[2] = createButton('chord3');
-  button[2].position(200, 200);
+  button[2].position(window.innerWidth/2 + 50, window.innerHeight/2);
   button[2].mousePressed( ()=> playSound('chord3'));
 
   button[3] = createButton('chord4');
-  button[3].position(300, 200);
+  button[3].position(window.innerWidth/2 + 150, window.innerHeight/2);
   button[3].mousePressed( ()=> playSound('chord4'));
 }
 
 function draw() {
   background(150);
+
+  textAlign(CENTER);
+  textSize(100);
+  text('Sampler', window.innerWidth/2, window.innerHeight/6);
 }
 
 function playSound(whichChord) {
