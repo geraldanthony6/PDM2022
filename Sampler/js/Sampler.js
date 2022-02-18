@@ -8,9 +8,14 @@ let sounds = new Tone.Players({
 
 let button = [];
 
+let slider;
+
+const delay = new Tone.FeedbackDelay("8n", 0.5);
+
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
-  sounds.toDestination();
+  sounds.connect(delay);
+  delay.toDestination();
 
   button[0] = createButton('chord1');
   button[0].position(window.innerWidth/2 - 150, window.innerHeight/2);
@@ -27,6 +32,12 @@ function setup() {
   button[3] = createButton('chord4');
   button[3].position(window.innerWidth/2 + 150, window.innerHeight/2);
   button[3].mousePressed( ()=> playSound('chord4'));
+
+  slider = createSlider(0, 1, 0, 0, 0.1);
+  slider.mouseReleased( ()=> {
+     let delayTime = slider.value();
+     delay.delayTime.value = delayTime;
+  });
 }
 
 function draw() {
