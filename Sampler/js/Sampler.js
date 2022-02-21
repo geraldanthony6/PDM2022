@@ -11,26 +11,35 @@ let button = [];
 let slider;
 
 const delay = new Tone.FeedbackDelay("8n", 0.5);
+delay.delayTime.value = 0;
+
+
 
 function setup() {
-  createCanvas(window.innerWidth, window.innerHeight);
+  createCanvas(windowWidth, windowHeight);
+
   sounds.connect(delay);
   delay.toDestination();
 
+
   button[0] = createButton('chord1');
-  button[0].position(window.innerWidth/2 - 150, window.innerHeight/2);
+  button[0].position(10, 200);
+  button[0].size(width/2-5, height/ 2-10);
   button[0].mousePressed( ()=> playSound('chord1'));
 
   button[1] = createButton('chord2');
-  button[1].position(window.innerWidth/2 - 50, window.innerHeight/2);
+  button[1].position(width/2, 200);
+  button[1].size(width/2-5, height/2 - 10);
   button[1].mousePressed( ()=> playSound('chord2'));
 
   button[2] = createButton('chord3');
-  button[2].position(window.innerWidth/2 + 50, window.innerHeight/2);
+  button[2].position(10, 550);
+  button[2].size(width/2 - 5, height/2 - 100);
   button[2].mousePressed( ()=> playSound('chord3'));
 
   button[3] = createButton('chord4');
-  button[3].position(window.innerWidth/2 + 150, window.innerHeight/2);
+  button[3].position(width/2, 550);
+  button[3].size(width/2 - 5, height/2 - 100);
   button[3].mousePressed( ()=> playSound('chord4'));
 
   slider = createSlider(0, 1, 0, 0, 0.1);
@@ -44,8 +53,12 @@ function draw() {
   background(150);
 
   textAlign(CENTER);
-  textSize(100);
-  text('Sampler', window.innerWidth/2, window.innerHeight/6);
+  textSize(80);
+  text('Piano Chords Sampler', window.innerWidth/2, window.innerHeight/6);
+
+  textAlign(CENTER);
+  textSize(20);
+  text('Delay Effect', 60, 960);
 }
 
 function playSound(whichChord) {
