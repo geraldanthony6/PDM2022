@@ -29,7 +29,7 @@ let notes = {
 }
 
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(window.innerWidth, window.innerHeight);
   synth.release = 2;
   synth.resonance = 0.98;
   // synth.harmonicity.value = 1.25;
