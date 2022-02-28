@@ -1,5 +1,7 @@
+let slider;
+let frequency;
 const synthDrum = new Tone.MembraneSynth({
-  "frequency"  : 45 ,
+  "frequency"  : frequency ,
 "envelope"  : {
   "attack"  : 0.001 ,
   "decay"  : 0.4 ,
@@ -29,6 +31,12 @@ function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
   synthDrum.release = 1;
   synthDrum.resonance = 0.98;
+
+  slider = createSlider(10, 50, 0, 5);
+  slider.mouseReleased( ()=> {
+    let frequencyLevel = slider.value();
+    frequency.frequencyLevel.value = frequencyLevel;
+ });
 }
 
 function draw() {
