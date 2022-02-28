@@ -27,8 +27,8 @@ let notes = {
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
-  synth.release = 1;
-  synth.resonance = 0.98;
+  synthDrum.release = 1;
+  synthDrum.resonance = 0.98;
 }
 
 function draw() {
@@ -38,5 +38,5 @@ function draw() {
 function keyPressed() {
   let toPlay = notes[key];
   console.log(toPlay);
-  synth.triggerAttackRelease(toPlay, 0.5);
+  synthDrum.triggerAttackRelease(toPlay, 0.5);
 }
