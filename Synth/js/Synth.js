@@ -26,7 +26,7 @@ let notes = {
 }
 
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(window.innerWidth, window.innerHeight);
   synth.release = 1;
   synth.resonance = 0.98;
 }
