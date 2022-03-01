@@ -2,7 +2,6 @@ const { Nexus } = require("./NexusUI");
 const { Tone } = require("./Tone");
 
 let slider;
-let frequency;
 const synthDrum = new Tone.MembraneSynth({
   "frequency"  : 50 ,
 "envelope"  : {
@@ -47,6 +46,9 @@ function setup() {
 
 function draw() {
   background(100);
+
+  textSize(30);
+  text('Press keys to play synth!')
 }
 
 function keyPressed() {
