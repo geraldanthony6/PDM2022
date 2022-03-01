@@ -63,8 +63,7 @@ function draw() {
   background(100);
 
   textSize(30);
-  text('Press keys to play synth!', 100, 100);
-  text('Move slider to change reverb!', 10, 50);
+  text('Press keys to play synth!', 20, 50);
 }
 
 function keyPressed() {
