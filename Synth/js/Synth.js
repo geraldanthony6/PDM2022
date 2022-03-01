@@ -21,14 +21,31 @@ synthDrum.connect(reverb);
 
 let notes = {
   'q': 'A1',
-  'a': 'C4',
-  's': 'D4',
-  'd': 'E4',
-  'f': 'F4',
-  'g': 'G4',
-  'h': 'A4',
-  'j': 'B4',
-  'k': 'C5'
+  'w': 'B1',
+  'e': 'C1',
+  'r': 'D1',
+  't': 'E1',
+  'y': 'F1',
+  'u': 'G1',
+  'i': 'A2',
+  'o': 'B2',
+  'p': 'C2',
+  'a': 'D2',
+  's': 'E2',
+  'd': 'F2',
+  'f': 'G2',
+  'g': 'A3',
+  'h': 'B3',
+  'j': 'C3',
+  'k': 'D3',
+  'l': 'E3',
+  'z': 'F3',
+  'x': 'G3',
+  'c': 'A4',
+  'v': 'B4',
+  'b': 'C4',
+  'n': 'D4',
+  'm': 'E4'
 }
 
 function setup() {
@@ -46,7 +63,7 @@ function draw() {
   background(100);
 
   textSize(30);
-  text('Press keys to play synth!')
+  text('Press keys to play synth!', 20, 50);
 }
 
 function keyPressed() {
