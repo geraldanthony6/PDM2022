@@ -14,9 +14,9 @@ const synthDrum = new Tone.MembraneSynth({
 });
 
 const reverb = new Tone.JCReverb(0).toDestination();
-const osc = new Tone.OmniOscillator("A#2", "pwm").start();
+// const osc = new Tone.OmniOscillator("A#2", "pwm").start();
 
-osc.connect(reverb);
+// osc.connect(reverb);
 synthDrum.connect(reverb);
 
 let notes = {
