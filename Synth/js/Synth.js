@@ -1,5 +1,3 @@
-const { Nexus } = require("./NexusUI");
-const { Tone } = require("./Tone");
 
 let slider;
 const synthDrum = new Tone.MembraneSynth({
