@@ -1,7 +1,10 @@
+const { Nexus } = require("./NexusUI");
+const { Tone } = require("./Tone");
+
 let slider;
 let frequency;
 const synthDrum = new Tone.MembraneSynth({
-  "frequency"  : frequency ,
+  "frequency"  : 50 ,
 "envelope"  : {
   "attack"  : 0.001 ,
   "decay"  : 0.4 ,
@@ -13,10 +16,14 @@ const synthDrum = new Tone.MembraneSynth({
 "octaves"  : 1.5
 });
 
-const reverb = new Tone.JCReverb(0.4).toDestination();
+const reverb = new Tone.JCReverb(0).toDestination();
+const osc = new Tone.OmniOscillator("A#2", "pwm").start();
+
+osc.connect(reverb);
 synthDrum.connect(reverb);
 
 let notes = {
+  'q': 'A1',
   'a': 'C4',
   's': 'D4',
   'd': 'E4',
@@ -32,10 +39,9 @@ function setup() {
   synthDrum.release = 1;
   synthDrum.resonance = 0.98;
 
-  slider = createSlider(10, 50, 0, 5);
-  slider.mouseReleased( ()=> {
-    let frequencyLevel = slider.value();
-    frequency.frequencyLevel.value = frequencyLevel;
+  slider = new Nexus.Slider('#slider');
+  slider.on('change', (v)=> {
+    reverb.roomSize.value = v;
  });
 }
 
