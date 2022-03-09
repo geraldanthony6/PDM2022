@@ -10,7 +10,7 @@ let curText = peaceText;
 let synth = new Tone.AMSynth().toDestination();
 
 let nukeSynth = new Tone.MembraneSynth();
-const reverb = new Tone.JCReverb(0.5).toDestination();
+const reverb = new Tone.JCReverb(0.8).toDestination();
 nukeSynth.connect(reverb);
 
 let osc =  new Tone.AMOscillator(500, 'sine', 'triangle').start();
