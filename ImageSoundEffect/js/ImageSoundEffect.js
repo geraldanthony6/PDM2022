@@ -1,6 +1,9 @@
 let city;
 let nukedCity;
 let peaceful = true;
+let peaceText = "Sounds of Peace";
+let warText = "Sounds of War";
+let curText = peaceText;
 
 
 let synth = new Tone.AMSynth().toDestination();
@@ -9,22 +12,37 @@ let nukeSynth = new Tone.MembraneSynth();
 const reverb = new Tone.JCReverb(0.5).toDestination();
 nukeSynth.connect(reverb);
 
-let osc =  new Tone.AMOscillator(500, 'sine', 'sine').start();
+let osc =  new Tone.AMOscillator(500, 'sine', 'square').start();
 let gain = new Tone.Gain().toDestination();
 let pan = new Tone.Panner().connect(gain);
 let env = new Tone.AmplitudeEnvelope({
-  attack: 0.9,
-  decay: 0.3,
+  attack: .2,
+  decay: .8,
   sustain: 1.0,
   release: 0.7
 }).connect(pan);
 osc.connect(env);
 
-let freqLFO = new Tone.LFO(4, 300, 1000).start();
+let freqLFO = new Tone.LFO(2, 100, 10000).start();
 freqLFO.connect(osc.frequency);
 
+let noise = new Tone.Noise('brown').start();
+let noiseEnvelope = new Tone.AmplitudeEnvelope({
+    attack: .1,
+    decay: .5,
+    sustain: 0.4,
+    release: 0.2
+});
+let noiseFilter = new Tone.Filter({
+  type: "lowpass",
+  frequency: 100
+});
+noise.connect(noiseEnv);
+noiseEnvelope.connect(noiseFilter);
+noiseFilter.connect(gain);
+
 function preload(){
-  city = createImg('Media/Cartoon_City.jpg');
+  city = createImg('Media/future.jpg');
   nukedCity = createImg('Media/apocalypse.jpg');
 }
 
@@ -35,39 +53,42 @@ function setup(){
 function draw(){
 
   Tone.start();
-  city.position(10, 10);
-  nukedCity.position(10, 10);
-
+  city.position(100, 200);
+  nukedCity.position(100, 200);
+  let y;
+  textSize(30);
+  text('Click to travel between the sounds of our possible futures', 20, 100);
+  text('Sounds of Peace vs Sounds of War', 150, 180);
   if(peaceful){
     nukedCity.hide();
     city.show();
-    if((frameCount % (60 * 6)) === 0)
+    if((frameCount % (60 * 4)) === 0)
     {
-      synth.triggerAttackRelease("C4", 1.75);
-      synth.triggerAttackRelease("B5", '8n', '+.25');
+      synth.triggerAttackRelease("C4", '2n');
+      synth.triggerAttackRelease("B5", '4n', '+.25');
       synth.triggerAttackRelease("D5", '8n', '+0.5');
       synth.triggerAttackRelease("F5", '4n', '+0.75');
       synth.triggerAttackRelease("D5", '8n', '+1.25');
-      synth.triggerAttackRelease("B5", '8n', '+1.5');
-      synth.triggerAttackRelease("A3", 1.75, '+1.75');
-      synth.triggerAttackRelease("D5", '8n', '+2');
+      synth.triggerAttackRelease("C4", '4n', '+1.5');
+      synth.triggerAttackRelease("A3", '8n', '+1.75');
+      synth.triggerAttackRelease("D5", '4n', '+2');
       synth.triggerAttackRelease("F5", '8n', '+2.25');
       synth.triggerAttackRelease("A5", '4n', '+2.5');
       synth.triggerAttackRelease("F5", '8n', '+3');
-      synth.triggerAttackRelease("D5", '8n', '+3.25');
-      synth.triggerAttackRelease("C2", 1.75, '+3.5');
+      synth.triggerAttackRelease("D5", '4n', '+3.25');
+      synth.triggerAttackRelease("G3", '8n', '+3.5');
       synth.triggerAttackRelease("C5", '8n', '+3.75');
-      synth.triggerAttackRelease("E5", '8n', '+4');
-      synth.triggerAttackRelease("G5", '4n', '+4.25');
-      synth.triggerAttackRelease("E5", '8n', '+4.75');
-      synth.triggerAttackRelease("C5", '8n', '+5');
+      synth.triggerAttackRelease("E5", '4n', '+4');
+      synth.triggerAttackRelease("B5", '4n', '+4.25');
+      synth.triggerAttackRelease("A5", '8n', '+4.75');
+      synth.triggerAttackRelease("C5", '4n', '+5');
     }
   } else {
     nukedCity.show();
     city.hide();
-    if((frameCount % (60 * 11)) === 0)
+    if((frameCount % (60 * 6)) === 0)
     {
-      nukeSynth.triggerAttackRelease("G1", 1.5);
+      nukeSynth.triggerAttackRelease("G1", .5);
       nukeSynth.triggerAttackRelease("A1", '2n', '+2');
       nukeSynth.triggerAttackRelease("B2", '2n', '+2.5');
       nukeSynth.triggerAttackRelease("C2", '2n', '+3');
@@ -80,13 +101,14 @@ function draw(){
 }
 
 function mousePressed(){
-  nukeDrop();
+  switchTime();
   peaceful = !peaceful;
   frameCount = 0;
 }
 
-function nukeDrop(){
+function switchTime(){
   for(let i = 0; i < 1; i++){
     env.triggerAttackRelease('8n', "+"+i/2);
+    noiseEnvelope.triggerAttackRelease('8n', "+"+i/3);
   }
 }
