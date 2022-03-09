@@ -1,3 +1,4 @@
+//Declare variables
 let city;
 let nukedCity;
 let peaceful = true;
@@ -5,21 +6,21 @@ let peaceText = "Sounds of Peace";
 let warText = "Sounds of War";
 let curText = peaceText;
 
-
+//Declare synths and instruments
 let synth = new Tone.AMSynth().toDestination();
 
 let nukeSynth = new Tone.MembraneSynth();
 const reverb = new Tone.JCReverb(0.5).toDestination();
 nukeSynth.connect(reverb);
 
-let osc =  new Tone.AMOscillator(500, 'sine', 'square').start();
+let osc =  new Tone.AMOscillator(500, 'sine', 'triangle').start();
 let gain = new Tone.Gain().toDestination();
 let pan = new Tone.Panner().connect(gain);
 let env = new Tone.AmplitudeEnvelope({
-  attack: .2,
-  decay: .8,
+  attack: .1,
+  decay: .2,
   sustain: 1.0,
-  release: 0.7
+  release: 0.8
 }).connect(pan);
 osc.connect(env);
 
