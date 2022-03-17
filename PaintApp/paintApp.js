@@ -1,5 +1,11 @@
 let currentColor, red, orange, yellow, green, cyan, blue, magenta, brown, white, black;
 
+let synth = new Tone.AMSynth().toDestination();
+
+let drumSynth = new Tone.MembraneSynth();
+const reverb = new Tone.JCReverb(0.4).toDestination();
+drumSynth.connect(reverb);
+
 function setup() {
   createCanvas(900, 900);
   background(255);
@@ -18,9 +24,14 @@ function setup() {
 }
 
 function draw() {
+
+  Tone.start();
   if(mouseIsPressed){
   if(mouseX > 26){
     drawArt();
+    if(currentColor == "red"){
+      synth.triggerAttackRelease("A2", '8n');
+    }
     }
   }
   
@@ -59,12 +70,16 @@ class colorBoxes{
     if(mouseX < 25){
         if(mouseY > 0 && mouseY < 25){
           currentColor = "red";
+          synth.triggerAttackRelease("C4", '4n');
         } else if(mouseY > 25 && mouseY < 50){
           currentColor = color(239, 134, 51);
+          synth.triggerAttackRelease("A4", '8n');
         } else if(mouseY > 50 && mouseY < 75){
           currentColor = color(255, 249, 73);
+          synth.triggerAttackRelease("G1", '8n');
         } else if(mouseY > 75 && mouseY < 100){
           currentColor = color(120, 242, 58);
+          synth.triggerAttackRelease("B2", '4n');
         } else if(mouseY > 100 && mouseY < 125){
           currentColor = color(117, 249, 251);
         } else if(mouseY > 125 && mouseY < 150){
