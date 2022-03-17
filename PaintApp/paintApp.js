@@ -1,6 +1,17 @@
 let currentColor, red, orange, yellow, green, cyan, blue, magenta, brown, white, black;
+let currentNote;
+let startTime = 0;
+let endTime = 5;
 
 let synth = new Tone.AMSynth().toDestination();
+const seq = new Tone.Sequence((time, note) => {
+  synth.triggerAttackRelease(note, 0.9, time);
+},  ["C4", ["E4", "D4", "E4"], "G4", ["A4", "G4"]]);
+
+const loop = new Tone.Loop((time) => {
+    drumSynth.triggerAttackRelease("G3", '4n');
+    }, "12n");
+   
 
 let drumSynth = new Tone.MembraneSynth();
 const reverb = new Tone.JCReverb(0.4).toDestination();
@@ -20,17 +31,23 @@ function setup() {
   brown = new colorBoxes(175, color(120, 67, 20));
   white = new colorBoxes(200, color(255, 255, 255));
   black = new colorBoxes(225, color(0, 0, 0));
-  
+
 }
 
 function draw() {
 
-  Tone.start();
+
   if(mouseIsPressed){
   if(mouseX > 26){
     drawArt();
     if(currentColor == "red"){
-      synth.triggerAttackRelease("A2", '8n');
+      //synth.triggerAttackRelease("A2", '8n');
+      currentNote = "A2";
+      seq.start(startTime);
+    } else if(currentColor == color(239, 134, 51)){
+      synth.triggerAttackRelease("G3", '4n');
+      Tone.Transport.stop();
+      currentNote = "G2";
     }
     }
   }
@@ -67,6 +84,8 @@ class colorBoxes{
   
   onMousePress(){
     if(mouseIsPressed){
+      Tone.start();
+      Tone.Transport.start();
     if(mouseX < 25){
         if(mouseY > 0 && mouseY < 25){
           currentColor = "red";
@@ -96,6 +115,14 @@ class colorBoxes{
       }  
     }
   }
+}
+
+function onMouseReleased(){
+  if(mouseIsReleased){
+    if(mouseX < 25){
+      seq.stop();
+    }
+  } 
 }
 
 function drawArt(){
