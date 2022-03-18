@@ -1,21 +1,23 @@
 let currentColor, red, orange, yellow, green, cyan, blue, magenta, brown, white, black;
-let currentNote;
-let startTime = 0;
-let endTime = 5;
 
 let synth = new Tone.AMSynth().toDestination();
-const seq = new Tone.Sequence((time, note) => {
-  synth.triggerAttackRelease(note, 0.9, time);
-},  ["C4", ["E4", "D4", "E4"], "G4", ["A4", "G4"]]);
+const redSeq = new Tone.Sequence((time, note) => {
+  synth.triggerAttackRelease(note, 5);
+},  ["C4", "E4", "G4", ["A4", "G4"]], '8n');
+
+const orangeSeq = new Tone.Sequence((time, note) => {
+  synth.triggerAttackRelease(note, 5);
+},  ["C4", "E4", "G4", "A4"], '8n');
 
 const loop = new Tone.Loop((time) => {
-    drumSynth.triggerAttackRelease("G3", '4n');
+     drumSynth.triggerAttackRelease("G3", '4n');
     }, "12n");
    
 
 let drumSynth = new Tone.MembraneSynth();
 const reverb = new Tone.JCReverb(0.4).toDestination();
 drumSynth.connect(reverb);
+
 
 function setup() {
   createCanvas(900, 900);
@@ -41,12 +43,10 @@ function draw() {
   if(mouseX > 26){
     drawArt();
     if(currentColor == "red"){
-      //synth.triggerAttackRelease("A2", '8n');
+      synth.triggerAttackRelease("A2", '8n');
       currentNote = "A2";
-      seq.start(startTime);
     } else if(currentColor == color(239, 134, 51)){
       synth.triggerAttackRelease("G3", '4n');
-      Tone.Transport.stop();
       currentNote = "G2";
     }
     }
@@ -90,12 +90,18 @@ class colorBoxes{
         if(mouseY > 0 && mouseY < 25){
           currentColor = "red";
           synth.triggerAttackRelease("C4", '4n');
+          redSeq.start();
+          orangeSeq.stop();
         } else if(mouseY > 25 && mouseY < 50){
           currentColor = color(239, 134, 51);
           synth.triggerAttackRelease("A4", '8n');
+          redSeq.stop();
+          //loop.start();
+          orangeSeq.start();
         } else if(mouseY > 50 && mouseY < 75){
           currentColor = color(255, 249, 73);
           synth.triggerAttackRelease("G1", '8n');
+          //loop.stop();
         } else if(mouseY > 75 && mouseY < 100){
           currentColor = color(120, 242, 58);
           synth.triggerAttackRelease("B2", '4n');
