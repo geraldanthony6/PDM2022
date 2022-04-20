@@ -2,7 +2,7 @@
 
 PDMSerial pdm;
 
-const int analogPin = A0;  
+const int analogPin = A1;  
 
 
 const int outPin6 = 6;    
