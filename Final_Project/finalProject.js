@@ -11,13 +11,7 @@ let randomSquarePositionx = [];
 let randomSquarePositiony = [];
 let randomSquareSize = [];
 var randomSquareChangeDirectionX = [];
-
-let randomTrianglePositiony1;
-let randomTrianglePositionx1;
-let randomTrianglePositiony2;
-let randomTrianglePositionx2;
-let randomTrianglePositiony3;
-let randomTrianglePositionx3;
+var randomSquareChangeDirectionY = [];
 
 
 let randomCircleSpeeds = [];
@@ -33,18 +27,40 @@ let nukeSynth = new Tone.MembraneSynth();
 const reverb = new Tone.JCReverb(0.8).toDestination();
 nukeSynth.connect(reverb);
 
-const startSeq = new Tone.Sequence((time, note) => {
-  synth.triggerAttackRelease(note, 3);
-}, ["A2", "A4", "C2", "A3", ["G1", "B1", "B4"]], '3n');
+let pluckSynth = new Tone.PluckSynth().toDestination();
 
-const yellowSeq = new Tone.Sequence((time, note) => {
+let osc =  new Tone.AMOscillator(500, 'sine', 'triangle').start();
+let gain = new Tone.Gain().toDestination();
+let pan = new Tone.Panner().connect(gain);
+let env = new Tone.AmplitudeEnvelope({
+  attack: .1,
+  decay: .2,
+  sustain: 1.0,
+  release: 0.8
+}).connect(pan);
+osc.connect(env);
+
+let freqLFO = new Tone.LFO(2, 100, 10000).start();
+freqLFO.connect(osc.frequency);
+
+const circleSeq = new Tone.Sequence((time, note) => {
+  synth.triggerAttackRelease(note, 3);
+}, ["C2", "B4", "C2", "B3", ["G1", "B1", "B4"]], '3n');
+
+const nullSeq = new Tone.Sequence((time, note) => {
+  pluckSynth.triggerAttackRelease(note, 5);
+},  ["C1", "E2", "D1", ["A4", "C2"]], '4n');
+
+const squareSeq = new Tone.Sequence((time, note) => {
   nukeSynth.triggerAttackRelease(note, 5);
 },  ["C1", "E2", "D1", ["A4", "C2"]], '4n');
+
+
 
 function setup(){
   createCanvas(window.innerWidth, window.innerHeight);
   background(0, 0, 0);
-  //rectMode(CENTER);
+  
 
   for(let i = 0; i <= 49; i++){
   randomCircleMovementX[i] = 1;
@@ -57,6 +73,7 @@ function setup(){
     randomSquarePositionx[i] = 120;
     randomSquarePositiony[i] = 0;
     randomSquareChangeDirectionX[i] = false;
+    randomSquareChangeDirectionY[i] = false;
   }
 
   
@@ -111,6 +128,9 @@ function setup(){
   randomCircleSpeeds[47] = 135;
   randomCircleSpeeds[48] = 115;
   randomCircleSpeeds[49] = 23;
+
+  text('Click Left Arrow/Button for Circles', 700, window.innerHeight/2);
+  text('Click Right Arrow/Button for Squares', 670, window.innerHeight/2 + 100);
 }
 
 function draw(){
@@ -120,31 +140,38 @@ function draw(){
   background(0, 0, 0);
   textSize(40);
 
-  text('Click Left Arrow for Circles', 700, window.innerHeight/2);
-  text('Click Right Arrow for Squares', 670, window.innerHeight/2 + 100);
+  text('Hold Left Arrow//Button for Circles', window.innerWidth/1.5 - 600, window.innerHeight/2);
+  text('Hold Right Arrow/Button for Squares', window.innerWidth/1.5 - 600, window.innerHeight/2 + 100);
+  text('Hold Space for neither', window.innerWidth/1.5 - 600, window.innerHeight/2 + 200);
 
 
   if((keyIsPressed == true) && (keyCode == LEFT_ARROW)){
+    Tone.start();
+    Tone.Transport.start();
     SpawnCircle();
-    startSeq.start();
-    //redSeq.stop();
+    circleSeq.start();
+    squareSeq.stop();
+    nullSeq.stop();
   } else if((keyIsPressed == true) && (keyCode == RIGHT_ARROW)){
+    Tone.start();
+    Tone.Transport.start();
     SpawnSquare();
-    startSeq.stop();
-    //redSeq.start();
-  }
-
-
-  if((keyIsPressed == true) && (keyCode == 32)){
-    clear();
-    background(0, 0, 0);
-  }
+    circleSeq.stop();
+    nullSeq.stop();
+    squareSeq.start();
+  } else if((keyIsPressed == true) && (keyCode == 32)){
+    Tone.start();
+    Tone.Transport.start();
+    circleSeq.stop();
+    squareSeq.stop();
+    nullSeq.start();
+    }
 }
 
 function SpawnCircle(){
   for(let i = 1;i <= 49; i++){
   fill(random([0, 255]), random([0, 255]), random([0, 255]));
-  circle(randomCircleMovementX[i], randomCircleMovementY[i], random([50], [100]));
+  circle(randomCircleMovementX[i], randomCircleMovementY[i], random([50], [200]));
     if(randomCircleMovementX[i] > width){
       randomCircleChangeDirectionX[i] = true;
     } else if(randomCircleMovementX[i] <= 0){
@@ -158,15 +185,15 @@ function SpawnCircle(){
     }
   
     if(randomCircleChangeDirectionX[i] == false){
-      randomCircleMovementX[i] = randomCircleMovementX[i] + randomCircleSpeeds[i];
+      randomCircleMovementX[i] = randomCircleMovementX[i] + randomCircleSpeeds[i]/5;
     } else if(randomCircleChangeDirectionX[i] == true){
-      randomCircleMovementX[i] = randomCircleMovementX[i] - randomCircleSpeeds[i];
+      randomCircleMovementX[i] = randomCircleMovementX[i] - randomCircleSpeeds[i]/5;
     }
   
       if(randomCircleChangeDirectionY[i] == false){
-        randomCircleMovementY[i] = randomCircleMovementY[i] + randomCircleSpeeds[i];
+        randomCircleMovementY[i] = randomCircleMovementY[i] + randomCircleSpeeds[i]/5;
       } else if(randomCircleChangeDirectionY[i] == true){
-        randomCircleMovementY[i] = randomCircleMovementY[i] - randomCircleSpeeds[i];
+        randomCircleMovementY[i] = randomCircleMovementY[i] - randomCircleSpeeds[i]/5;
       }
     }
 }
@@ -177,36 +204,38 @@ function SpawnSquare(){
   for (var i = 0; i < 50; i++) {
     push();
     rotate(TWO_PI * i / 16);
-    rect(randomSquarePositionx[i], randomSquarePositiony[i], 100, 100);
-    if(frameCount % 25 == 0){
+    rect(randomSquarePositionx[i], randomSquarePositiony[i], random([100], [200]), 100);
+    if(frameCount % 60 == 0){
     rotate(radians(frameCount));
     }
-    if(randomCircleMovementX[i] > width){
-      randomCircleChangeDirectionX[i] = true;
-    } else if(randomCircleMovementX[i] <= 0){
-      randomCircleChangeDirectionX[i] = false;
+    if(randomSquarePositionx[i] > width){
+      randomSquareChangeDirectionX[i] = true;
+    } else if(randomSquarePositionx[i] <= 0){
+      randomSquareChangeDirectionX[i] = false;
     }
-    
-    if(randomCircleChangeDirectionX[i] == false){
-      randomSquarePositionx[i] = randomSquarePositionx[i] + 10;
-    } else if(randomCircleChangeDirectionX[i] == true){
-      randomSquarePositionx[i] = randomSquarePositionx[i] - 25;
+  
+    if(randomSquarePositiony[i] > height){
+      randomSquareChangeDirectionY[i] = true;
+    } else if(randomSquarePositiony[i] <= 0){
+      randomSquareChangeDirectionY[i] = false;
+    }
+  
+    if(randomSquareChangeDirectionX[i] == false){
+      randomSquarePositionx[i] = randomSquarePositionx[i] + randomCircleSpeeds[i]/5;
+    } else if(randomSquareChangeDirectionX[i] == true){
+      randomSquarePositionx[i] = randomSquarePositionx[i] - randomCircleSpeeds[i]/5;
+    }
+  
+    if(randomSquareChangeDirectionY[i] == false){
+      randomSquarePositiony[i] = randomSquarePositiony[i] + randomCircleSpeeds[i]/5;
+    } else if(randomSquareChangeDirectionX[i] == true){
+      randomSquarePositiony[i] = randomSquarePositiony[i] - randomCircleSpeeds[i]/5;
     }
     
     pop();
   }
 }
 
-// function SpawnTriangle(){
-//   randomTrianglePositionx1 = random([10], [200]);
-//   randomTrianglePositiony1 = random([10], [200]);
-//   randomTrianglePositionx2 = random([10], [200]);
-//   randomTrianglePositiony2 = random([10], [200]);
-//   randomTrianglePositionx3 = random([10], [200]);
-//   randomTrianglePositiony3 = random([10], [200]);
-//   fill(random([0, 255]), random([0, 255]), random([0, 255]));
-//   triangle(randomTrianglePositionx1, randomTrianglePositiony1, randomTrianglePositionx2, randomTrianglePositiony2, randomTrianglePositionx3, randomTrianglePositiony3);
-// }
 
 
 
