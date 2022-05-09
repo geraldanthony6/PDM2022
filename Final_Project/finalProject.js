@@ -2,6 +2,8 @@
 let serialPDM;                        
 let portName = 'COM3';  
 
+let sensors;
+
 //Shape Stuff
 let randomCirclePositiony;
 let randomCirclePositionx;
@@ -58,9 +60,18 @@ const squareSeq = new Tone.Sequence((time, note) => {
 
 
 function setup(){
+  serialPDM = new PDMSerial(portName);
+  sensors = serialPDM.sensorData;
+
   createCanvas(window.innerWidth, window.innerHeight);
-  background(0, 0, 0);
-  
+  background(255, 255, 255);
+  textSize(50);
+  textAlign(CENTER);
+  text('Constant Change', window.innerWidth/2, window.innerHeight/2 - 300);
+  text('Epilepsy Warning, many flashing colors!', window.innerWidth/2, window.innerHeight/2 - 100);
+  text('Hold Left Arrow//Button for Circles', window.innerWidth/2, window.innerHeight/2 + 100);
+  text('Hold Right Arrow/Button for Squares', window.innerWidth/2, window.innerHeight/2 + 200);
+  text('Hold Space for neither', window.innerWidth/2, window.innerHeight/2 + 300);
 
   for(let i = 0; i <= 49; i++){
   randomCircleMovementX[i] = 1;
@@ -129,42 +140,51 @@ function setup(){
   randomCircleSpeeds[48] = 115;
   randomCircleSpeeds[49] = 23;
 
-  text('Click Left Arrow/Button for Circles', 700, window.innerHeight/2);
-  text('Click Right Arrow/Button for Squares', 670, window.innerHeight/2 + 100);
 }
 
 function draw(){
 
   Tone.start();
   Tone.Transport.start();
-  background(0, 0, 0);
+  //background(0, 0, 0);
   textSize(40);
 
-  text('Hold Left Arrow//Button for Circles', window.innerWidth/1.5 - 600, window.innerHeight/2);
-  text('Hold Right Arrow/Button for Squares', window.innerWidth/1.5 - 600, window.innerHeight/2 + 100);
-  text('Hold Space for neither', window.innerWidth/1.5 - 600, window.innerHeight/2 + 200);
 
-
-  if((keyIsPressed == true) && (keyCode == LEFT_ARROW)){
+  if(((keyIsPressed == true) && (keyCode == LEFT_ARROW)) || sensors.circle > 0){
+    background(0, 0, 0);
+    text('Hold Left Arrow//Button for Circles', window.innerWidth/2, window.innerHeight/2 + 100);
+    text('Hold Right Arrow/Button for Squares', window.innerWidth/2, window.innerHeight/2 + 200);
+    text('Hold Space for neither', window.innerWidth/2, window.innerHeight/2 + 300);
     Tone.start();
     Tone.Transport.start();
     SpawnCircle();
     circleSeq.start();
     squareSeq.stop();
     nullSeq.stop();
-  } else if((keyIsPressed == true) && (keyCode == RIGHT_ARROW)){
+    serialPDM.transmit('led13', 1);
+  } else if(((keyIsPressed == true) && (keyCode == RIGHT_ARROW)) || sensors.square > 0){
+    background(100, 230, 135);
+    text('Hold Left Arrow//Button for Circles', window.innerWidth/2, window.innerHeight/2 + 100);
+    text('Hold Right Arrow/Button for Squares', window.innerWidth/2, window.innerHeight/2 + 200);
+    text('Hold Space for neither', window.innerWidth/2, window.innerHeight/2 + 300);
     Tone.start();
     Tone.Transport.start();
     SpawnSquare();
     circleSeq.stop();
     nullSeq.stop();
     squareSeq.start();
-  } else if((keyIsPressed == true) && (keyCode == 32)){
+    serialPDM.transmit('led13', 1);
+  } else if(((keyIsPressed == true) && (keyCode == 32)) || sensors.spaceBar > 0){
+    background(200, 211, 123);
+    text('Hold Left Arrow//Button for Circles', window.innerWidth/2, window.innerHeight/2 + 100);
+    text('Hold Right Arrow/Button for Squares', window.innerWidth/2, window.innerHeight/2 + 200);
+    text('Hold Space for neither', window.innerWidth/2, window.innerHeight/2 + 300);
     Tone.start();
     Tone.Transport.start();
     circleSeq.stop();
     squareSeq.stop();
     nullSeq.start();
+    serialPDM.transmit('led13', 1);
     }
 }
 
